@@ -1,0 +1,71 @@
+.body{
+	margin: 1%;
+}
+.form-group{
+	margin: 1%;
+	margin-left: 0%;
+}
+
+.welcome{
+	font-size: 35px;
+}
+
+.forms{
+	display: flex;
+	justify-content: center;
+}
+
+.forms form{
+	margin: 1%;
+}
+
+.btn-primary:hover{
+	box-shadow: 5px 5px 8px #888888;
+}
+
+.restaurant{
+	margin: 1%;
+	padding: 2%;
+	border: solid lightgray 1px;
+}
+.title{
+	margin: 1%;
+}
+.right{
+	float: right;
+	text-align: right
+}
+.restaurant p{
+	display: inline-block;
+}
+
+input[type="number"]{
+	resize: horizontal;
+	width: 30%;
+}
+
+.view{
+	height: 50px; 
+}
+
+.screen{
+	justify-content: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.accept{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+table, th, td {
+	border: 1px solid black;
+  }
+  th, td {
+	padding: 15px;
+  }
+
+
+
+

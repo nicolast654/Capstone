@@ -1,0 +1,63 @@
+{% extends "delivery/layout.html" %}
+{% load static %}
+
+{% block title %} Restaurant {% endblock %}
+
+{% block body %}
+	<p class="welcome">You are logged in as {{request.user}}</p>
+	{% if no_orders %}
+	<p>You have no orders for today!</p>
+	{% else %}
+	 {% for order in orders %}
+	 	<div class="restaurant">
+	 		<p><b>{{order.user.username}}</b> ordered: </p><br>
+			<table>
+				<tr>
+					<th style="padding: 0;">Quantity</th>
+					<th style="padding: 0">Item name</th>
+				</tr>
+				<tr>
+					<td style="padding:0%">{{order.quantity}}</td>
+					<td style="padding:0%">{{order.food.name}}</td>
+				</tr>		
+			</table>
+			{% if not order.viewed %}
+			<div class="accept">
+				<form method="post" action="{% url 'accept' order.id %}">
+					<input type="submit" value="Accept" class="btn btn-success btn-sm">
+					{% csrf_token %}
+				</form>
+				<form method="post" action="{% url 'decline' order.id %} ">
+					<input type="submit" value="Decline" class="btn btn-danger btn-sm">
+					{% csrf_token %}
+				</form>
+			</div>
+			{% endif %}
+		</div>
+	 {% endfor %}
+	{% endif %}
+
+	<nav aria-label="Page navigation" class="navPages">
+		{% if p.num_pages >= 2 %}
+		  <ul class="pagination">
+			  {% if orders.has_previous %}
+			<li class="page-item">	    	
+			  <a class="page-link" href="?page={{orders.previous_page_number}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			 {% endif %}
+			{% for i in p.page_range %}
+			<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+			{% endfor %}
+			{% if orders.has_next %}
+			<li class="page-item">
+			  <a class="page-link" href="?page={{orders.next_page_number}}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+		  </ul>
+		{% endif %}
+	</nav>
+{% endblock %}

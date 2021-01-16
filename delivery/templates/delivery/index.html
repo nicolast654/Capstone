@@ -1,0 +1,56 @@
+{% extends 'delivery/layout.html' %}
+{% load static %}
+
+{% block title %} Order {% endblock %}
+
+{% block body %}
+<h3 class="title">What do you want to eat today?</h3>
+	{% for restaurant in restaurants %}
+		<div class="restaurant">
+		<p>{{restaurant.user.username}}</p>
+		{% if user.is_authenticated %}
+		<form method="post" action="{% url 'add_favorite' restaurant.id %}">
+			{% if restaurant not in favorites %}
+				<input type="submit" value="Add to favorite" class="btn btn-primary btn-sm">
+			{% else %}
+				<input type="submit" value="Remove from favorite" class="btn btn-danger btn-sm">
+			{% endif %}
+			{% csrf_token %}
+		</form>
+		{% endif %}
+		<form action="{% url 'restaurant_view' restaurant.id %}" class="view">
+			<input type="submit" value="view" class="btn btn-info btn-sm right up">
+		</form>
+		</div>
+	{% endfor %}
+
+
+
+	<nav aria-label="Page navigation" class="navPages">
+		{% if p.num_pages >= 2 %}
+		  <ul class="pagination">
+			  {% if restaurants.has_previous %}
+			<li class="page-item">	    	
+			  <a class="page-link" href="?page={{restaurants.previous_page_number}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			 {% endif %}
+			{% for i in p.page_range %}
+			<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+			{% endfor %}
+			{% if restaurants.has_next %}
+			<li class="page-item">
+			  <a class="page-link" href="?page={{restaurants.next_page_number}}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+		  </ul>
+		{% endif %}
+	</nav>	
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'delivery/script.js' %}"></script>
+{% endblock %}

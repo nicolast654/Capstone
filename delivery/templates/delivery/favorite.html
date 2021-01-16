@@ -1,0 +1,47 @@
+{% extends "delivery/layout.html" %}
+
+{% block title %}Favorite{% endblock %}
+
+{% block body %}
+<h3>All your favorite restaurants in one place...</h3>
+	{% if not empty %}
+		{% for item in favorites %}
+			<div class="restaurant">
+			<p>{{item.user.username}}</p>
+			<form method="post" action="{% url 'add_favorite' item.id %}">
+				<input type="submit" value="Remove from favorite" class="btn btn-danger btn-sm">
+				{% csrf_token %}
+			</form>
+			<form action="{% url 'restaurant_view' item.id %}" class="view">
+				<input type="submit" value="view" class="btn btn-info btn-sm right up">
+			</form>
+			</div>
+		{% endfor%}
+	{% else %}
+	<p>You have not restaurant in your favorite list... browse all restaurants to add some by clicking <a href="{% url 'index' %}">here</a></p>
+	{% endif %}
+
+	<nav aria-label="Page navigation" class="navPages">
+		{% if p.num_pages >= 2 %}
+		  <ul class="pagination">
+			  {% if favorites.has_previous %}
+			<li class="page-item">	    	
+			  <a class="page-link" href="?page={{favorites.previous_page_number}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			 {% endif %}
+			{% for i in p.page_range %}
+			<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+			{% endfor %}
+			{% if favorites.has_next %}
+			<li class="page-item">
+			  <a class="page-link" href="?page={{favorites.next_page_number}}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+		  </ul>
+		{% endif %}
+	</nav>	
+{% endblock %}

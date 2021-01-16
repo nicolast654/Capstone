@@ -1,0 +1,33 @@
+{% extends "delivery/layout.html" %}
+{% load static %}
+
+{% block title %}
+	My Cart
+{% endblock %}
+
+{% block body %}
+<h3>My Cart</h3>
+<div> <!-- class="screen" -->
+	{% for item in cart %}
+		<div class="card" style="width: 18rem;">
+			<div>
+			 {{item.quantity}} {{item.food.name}}
+			  <span class="right">${{item.food.price}}</span>
+			  <form method="post" action="{% url 'remove' item.food.name %}">
+			  	<input type="submit" value="Remove" class="btn btn-danger btn-sm right">
+			  	{% csrf_token %}
+			  </form>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+	<b><u>TOTAL:</u></b> ${{total}}
+	<form method="post" action="{% url 'checkout' %}" id="checkout">
+		<input type="submit" value="Checkout" class="btn btn-success btn-sm">
+		{% csrf_token %}
+	</form>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'delivery/script.js' %}"></script>
+{% endblock %}

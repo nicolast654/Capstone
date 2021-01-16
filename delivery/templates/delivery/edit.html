@@ -1,0 +1,76 @@
+{% extends "delivery/layout.html" %}
+{% load static %}
+
+{% block title %}Edit Menu{% endblock %} 
+
+{% block body %}
+<p class="welcome">You are logged in as {{request.user}}</p>
+<div id="main">
+<h3>Here is your menu: </h3>
+<button class="btn btn-success btn-sm" id="add">Add item</button>
+<br><br>
+<div class="screen">
+{% for food in menu %}
+		<div class="card" style="width: 18rem;">
+		  <div class="card-body">
+		  	<h5 class="card-title">{{food.name}}</h5>
+		  	<form class="row g-3 edit"  method="post" action="{% url 'edit_item' food.name %}">
+			  	<input type="text" name="description" value="{{food.description}}">
+			  	<div class="right">
+			  	  <label>Price</label>
+				  <input type="number" name="price" min="0" step="0.01" value="{{food.price}}">
+				</div>
+				{% csrf_token %}
+			  	<input class="btn btn-primary btn-sm" type="submit" value="Edit">
+			</form>
+			<form class="row g-3" method="post" id="delete" action="{% url 'delete' food.name %}">
+				<input class="btn btn-danger btn-sm" type="submit" value="Delete item">
+				{% csrf_token %}
+			</form>
+		  </div>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+
+<div id="add_div" style="display: none">
+	<h3>Add a new food </h3>
+	<form method="post" action="{% url 'add_item' %}">
+		<div class="mb-3">
+		  <label class="form-label">Food Name</label>
+		  <input name="name" type="text" class="form-control" required>
+		</div>
+		<div class="mb-3">
+		  <label class="form-label">Food description</label>
+		  <textarea name="description" class="form-control" rows="3"></textarea>
+		</div>
+		<div class="mb-3">
+	  	  <label>Price</label>
+		  <input type="number" name="price" class="form-control" min="0" value="{{food.price}}" step="0.01" required>
+		</div>
+		{% csrf_token %}
+		<input type="submit" value="Add" class="btn btn-success">
+	</form>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'delivery/script.js' %}"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

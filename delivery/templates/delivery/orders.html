@@ -1,0 +1,31 @@
+{% extends "delivery/layout.html" %}
+
+{% block title %}My orders{% endblock %}
+
+
+{% block body %}
+<h3>Your orders: </h3>
+	<table>
+		<tr>
+			<th>Quantity</th>
+			<th>Name</th>
+			<th>Status</th>
+			<th>Price</th>
+		</tr>
+		{% for item in orders %}
+			<tr>
+				<td>{{item.quantity}}</td>
+				<td>{{item.food.name}}</td>
+				{% if item.status == "accepted" %}
+					<td><span style="color:green">{{item.status}}</span></td>
+				{% elif item.status == "declined" %}
+					<td><span style="color:red">{{item.status}}</span></td>
+				{% else %}
+				<td><span style="color:blue">pending</span></td>
+				{% endif %}
+				<td>${{item.food.price}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+{% endblock%}
