@@ -1,5 +1,4 @@
 # CS50W CAPSTONE PROJECT
-___
 
 
 This project was created for completing CS50W HarvardX course. It is a delivery website, that allows customers to order any food of their choice from a restaurant that creates an account on this website, and adds its menu on it. This website covers the customer and the restaurant sides: On one side the customer can add an item to the cart, order it, and also add  restaurants to "favorite"; on the other side, the restaurant can add an item on its menu, remove it and accept or decline orders.
